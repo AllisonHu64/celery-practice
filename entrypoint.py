@@ -1,4 +1,4 @@
-from tasks import add
+from mymath.tasks import add
 
 result = add.delay(4, 4)
 try:

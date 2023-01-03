@@ -6,4 +6,4 @@ RUN git clone https://github.com/AllisonHu64/celery-practice.git
 
 WORKDIR /usr/ahu/code/celery-practice
 RUN pip install -r requirements.txt
-ENTRYPOINT ["celery", "-A", "tasks", "worker", "--loglevel=INFO"]
+ENTRYPOINT ["celery", "-A", "mymath", "worker", "--loglevel=INFO"]
