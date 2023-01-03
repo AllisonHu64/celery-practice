@@ -30,11 +30,17 @@ Install dependencies from pypi
 ```bash 
 pip install -r requirements.txt
 ```
-
-## Run the Celery woker server
+## Build Dockerfile
 
 ```
-celery -A tasks worker --loglevel=INFO
+docker build --no-cache -t celery-practice:SOME_VERSION .
+```
+
+## Run the Celery woker server as a Docker container
+
+```
+docker run --name celery -d -e REDIS_DOMAIN=SOME_IP \
+    -e RUN_ENV=development celery-practice:SOME_VERSION
 ```
 
 ## Calling the tasks
