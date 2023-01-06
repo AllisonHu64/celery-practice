@@ -42,9 +42,3 @@ docker build --no-cache -t celery-practice:SOME_VERSION .
 docker run --name celery -d -e REDIS_DOMAIN=SOME_IP \
     -e RUN_ENV=development celery-practice:SOME_VERSION
 ```
-
-## Calling the tasks
-```
-python entrypoint.py
-```
-
