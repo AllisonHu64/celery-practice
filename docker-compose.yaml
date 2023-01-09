@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  flask:
+    build: .
+    image: celery-practice:${TAG}
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"

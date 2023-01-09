@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ## Build Dockerfile
 
 ```
-docker build --no-cache -t celery-practice:SOME_VERSION .
+TAG=SOME_VERSION docker-compose build --no-cache
 ```
 
 ## Run the Celery woker server as a Docker container
