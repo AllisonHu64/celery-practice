@@ -3,6 +3,18 @@ services:
   flask:
     build: .
     image: celery-practice:${TAG}
+  myadd:
+    build: ./mymath/add
+    image: "myadd:${TAG}"
+  mysub:
+    build: ./mymath/sub
+    image: "mysub:${TAG}"
+  mymul:
+    build: ./mymath/mul
+    image: "mymul:${TAG}"
+  mydiv:
+    build: ./mymath/div
+    image: "mydiv:${TAG}"
   redis:
     image: "redis:latest"
     ports:
