@@ -1,5 +1,7 @@
+from .errors import MymathImageRunFailedException
 import docker
 import os
+import re
 
 class DockerClientHandler:
     def __init__(self):
@@ -30,13 +32,25 @@ class DockerClientHandler:
         return self.client.containers.run(image, cmd)
 
     def run_mymath_add(self, num1, num2):
-        return self.run_image(self.add_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        result = self.run_image(self.add_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        return DockerClientHandler.extract_mymath_result(result)
 
     def run_mymath_sub(self, num1, num2):
-        return self.run_image(self.sub_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        result = self.run_image(self.sub_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        return DockerClientHandler.extract_mymath_result(result)
 
     def run_mymath_mul(self, num1, num2):
-        return self.run_image(self.mul_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        result = self.run_image(self.mul_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        return DockerClientHandler.extract_mymath_result(result)
 
     def run_mymath_div(self, num1, num2):
-        return self.run_image(self.div_image, ['%d' % num1, '%d' % num2]).decode('utf-8')           
+        result = self.run_image(self.div_image, ['%d' % num1, '%d' % num2]).decode('utf-8')
+        return DockerClientHandler.extract_mymath_result(result)
+
+    def extract_mymath_result(result):
+        is_success = re.fullmatch('result: [+-]?\d+\n', result)
+        if not is_success:
+            raise MymathImageRunFailedException
+        else:
+            value = int(re.search('[+-]?\d+', result).group(0))
+            return value
