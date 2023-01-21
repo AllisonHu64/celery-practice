@@ -1,20 +1,8 @@
 version: "3.9"
 services:
-  flask:
-    build: .
-    image: celery-practice:${TAG}
-  myadd:
-    build: ./mymath/add
-    image: "myadd:${TAG}"
-  mysub:
-    build: ./mymath/sub
-    image: "mysub:${TAG}"
-  mymul:
-    build: ./mymath/mul
-    image: "mymul:${TAG}"
-  mydiv:
-    build: ./mymath/div
-    image: "mydiv:${TAG}"
+  dind:
+    build: ./dind
+    image: dind-practice:${TAG}
   redis:
     image: "redis:latest"
     ports:

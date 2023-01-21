@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  myadd:
+    build: ./add
+    image: "myadd:${MYMATH_TAG}"
+  mysub:
+    build: ./sub
+    image: "mysub:${MYMATH_TAG}"
+  mymul:
+    build: ./mul
+    image: "mymul:${MYMATH_TAG}"
+  mydiv:
+    build: ./div
+    image: "mydiv:${MYMATH_TAG}"

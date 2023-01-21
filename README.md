@@ -42,3 +42,9 @@ TAG=SOME_VERSION docker-compose build --no-cache
 docker run --name celery -d -e REDIS_DOMAIN=SOME_IP \
     -e RUN_ENV=development celery-practice:SOME_VERSION
 ```
+
+## Run the dind worker
+
+```
+docker run --privileged --name dind -d -p 2375:2375 -e MYMATH_TAG=SOME_VERSION dind-practice:SOME_VERSION
+```
