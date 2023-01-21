@@ -1,5 +1,8 @@
 version: "3.9"
 services:
+  flask:
+    build: .
+    image: celery-practice:${TAG}
   dind:
     build: ./dind
     image: dind-practice:${TAG}

@@ -35,16 +35,22 @@ pip install -r requirements.txt
 ```
 TAG=SOME_VERSION docker-compose build --no-cache
 ```
+## Run the dind worker
+
+```
+docker run --privileged --name dind -d -p 2375:2375 \
+    -e MYMATH_TAG=SOME_VERSION dind-practice:SOME_VERSION
+```
+## Build mymath images in dind
+
+```
+docker exec dind docker compose build
+```
 
 ## Run the Celery woker server as a Docker container
 
 ```
-docker run --name celery -d -e REDIS_DOMAIN=SOME_IP \
-    -e RUN_ENV=development celery-practice:SOME_VERSION
-```
-
-## Run the dind worker
-
-```
-docker run --privileged --name dind -d -p 2375:2375 -e MYMATH_TAG=SOME_VERSION dind-practice:SOME_VERSION
+docker run --name celery -d -p 5000:5000 -e REDIS_DOMAIN=10.32.124.136 \
+    -e DIND_IP=10.32.124.136 -e MYMATH_TAG=1.0 \
+    -e RUN_ENV=development celery-practice:1.0
 ```

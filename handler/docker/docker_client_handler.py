@@ -6,20 +6,17 @@ import re
 class DockerClientHandler:
     def __init__(self):
         add_image_name = os.environ.get('ADD_IMAGE_REPO') or 'myadd'
-        add_image_tag = os.environ.get('ADD_IMAGE_TAG') or '1.0'
-        self.add_image = '%s:%s' % (add_image_name, add_image_tag)
+        mymath_tag = os.environ.get('MYMATH_TAG') or '1.0'
+        self.add_image = '%s:%s' % (add_image_name, mymath_tag)
 
         sub_image_name = os.environ.get('SUB_IMAGE_REPO') or 'mysub'
-        sub_image_tag = os.environ.get('SUB_IMAGE_TAG') or '1.0'
-        self.sub_image = '%s:%s' % (sub_image_name, sub_image_tag)
+        self.sub_image = '%s:%s' % (sub_image_name, mymath_tag)
 
         mul_image_name = os.environ.get('MUL_IMAGE_REPO') or 'mymul'
-        mul_image_tag = os.environ.get('MUL_IMAGE_TAG') or '1.0'
-        self.mul_image = '%s:%s' % (mul_image_name, mul_image_tag)
+        self.mul_image = '%s:%s' % (mul_image_name, mymath_tag)
 
         div_image_name = os.environ.get('DIV_IMAGE_REPO') or 'mydiv'
-        div_image_tag = os.environ.get('DIV_IMAGE_TAG') or '1.0'
-        self.div_image = '%s:%s' % (div_image_name, div_image_tag)
+        self.div_image = '%s:%s' % (div_image_name, mymath_tag)
 
         run_env = os.environ.get('RUN_ENV') or 'local'
         # TODO(AllisonHu64): Add config for development env.
@@ -27,6 +24,11 @@ class DockerClientHandler:
             self.client = docker.DockerClient(
                 base_url='ssh://ec2-user@ec2-3-92-212-238.compute-1.amazonaws.com',
                 use_ssh_client=True)
+        elif run_env == 'development':
+            dind_ip = os.environ.get('DIND_IP')
+            dind_host = 'tcp://{}:2375'.format(dind_ip)
+            self.client = docker.DockerClient(
+                base_url=dind_host)
     
     def run_image(self, image, cmd):
         return self.client.containers.run(image, cmd)
